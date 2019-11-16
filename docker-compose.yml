@@ -1,0 +1,42 @@
+version: '3'
+services:
+  app:
+    container_name: app
+    build: .
+    environment:
+      - DB_USER=${DB_USER}
+      - DB_PASSWORD=${DB_PASS}
+      - DB_HOST=${DB_HOST}
+    command: bundle exec puma -C config/puma.rb
+    volumes: 
+      - .:/idea-note
+      - ./public/:/idea-note/public
+      - ./tmp/:/idea-note/tmp
+      - ./log/:/idea-note/log
+    depends_on: 
+      - db
+
+  db: 
+    container_name: db
+    image: mysql:8.0
+    environment:
+      - MYSQL_ROOT_PASSWORD=${DB_PASS}
+      - MYSQL_USER=${DB_USER}
+      - TZ=${TZ}
+    volumes: 
+      - ./tmp/mysql/:/var/lib/mysql/
+      - ./log/mysql/:/var/log/mysql
+      - ./containers/mysql/my.conf:/etc/mysql/conf.d/my.cnf
+    ports:
+      - ${DB_PORT}:3306
+
+  web:
+    container_name: web
+    build: containers/nginx
+    volumes:
+      - ./public/:/idea-note/public
+      - ./tmp/:/idea-note/tmp
+    ports:
+      - 80:80
+    depends_on:
+      - app
