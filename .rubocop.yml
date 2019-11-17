@@ -1,0 +1,67 @@
+inherit_from: .rubocop_todo.yml
+
+require:
+  - rubocop-rails
+
+Bundler/OrderedGems:
+  Exclude:
+    - 'Gemfile'
+
+Layout/EmptyLines:
+  Exclude:
+    - 'Gemfile'
+    - 'config/application.rb'
+
+Layout/SpaceAfterComma:
+  Exclude:
+    - 'config/puma.rb'
+
+Layout/SpaceInsideArrayLiteralBrackets:
+  Exclude:
+    - 'config/environments/production.rb'
+
+Layout/TrailingBlankLines:
+  Exclude:
+    - 'Gemfile'
+
+Style/Documentation:
+  Exclude:
+    - 'spec/**/*'
+    - 'test/**/*'
+    - 'app/helpers/application_helper.rb'
+    - 'app/mailers/application_mailer.rb'
+    - 'app/models/application_record.rb'
+    - 'config/application.rb'
+
+Style/ExpandPathArguments:
+  Exclude:
+    - 'config/puma.rb'
+
+Style/FrozenStringLiteralComment:
+  Enabled: false
+
+Style/MixinUsage:
+  Exclude:
+    - 'bin/setup'
+    - 'bin/update'
+
+Style/RedundantBegin:
+  Exclude:
+    - 'bin/yarn'
+
+Style/StderrPuts:
+  Exclude:
+    - 'bin/yarn'
+
+Style/StringLiterals:
+  Exclude:
+    - 'bin/yarn'
+    - 'config/application.rb'
+    - 'config/environments/production.rb'
+    - 'config/puma.rb'
+
+Style/SymbolArray:
+  EnforcedStyle: brackets
+
+Metrics/LineLength:
+  Max: 130
