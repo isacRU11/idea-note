@@ -19,12 +19,11 @@ Bundler.require(*Rails.groups)
 
 module IdeaNote
   class Application < Rails::Application
-
     # 以下を追加すれば日本語に
     config.i18n.default_locale = :ja
     # タイムゾーンも変更するなら，以下を追加
     config.time_zone = 'Asia/Tokyo'
-    
+
     config.load_defaults 5.2
     config.generators.system_tests = nil
   end

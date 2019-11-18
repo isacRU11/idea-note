@@ -1,8 +1,5 @@
 inherit_from: .rubocop_todo.yml
 
-require:
-  - rubocop-rails
-
 Bundler/OrderedGems:
   Exclude:
     - 'Gemfile'
@@ -23,15 +20,6 @@ Layout/SpaceInsideArrayLiteralBrackets:
 Layout/TrailingBlankLines:
   Exclude:
     - 'Gemfile'
-
-Style/Documentation:
-  Exclude:
-    - 'spec/**/*'
-    - 'test/**/*'
-    - 'app/helpers/application_helper.rb'
-    - 'app/mailers/application_mailer.rb'
-    - 'app/models/application_record.rb'
-    - 'config/application.rb'
 
 Style/ExpandPathArguments:
   Exclude:
@@ -63,5 +51,64 @@ Style/StringLiterals:
 Style/SymbolArray:
   EnforcedStyle: brackets
 
+# 自動生成されるものはチェック対象から除外する
+AllCops:
+  Exclude:
+    - "vendor/**/*"
+    - "db/schema.rb"
+  DisplayCopNames: true
+
+# redirect_to xxx and return のイディオムを維持したい
+Style/AndOr:
+  EnforcedStyle: conditionals
+
+# 日本語のコメントを許可する
+Style/AsciiComments:
+  Enabled: false
+
+# ドキュメントの無い public class を許可する
+Style/Documentation:
+  Enabled: false
+
+# 明示的に else で nil を返すのは分かりやすいので許可する
+Style/EmptyElse:
+  EnforcedStyle: empty
+
+# if 文の中に 3 行程度のブロックを書くぐらいは許容した方が現実的
+Style/GuardClause:
+  MinBodyLength: 5
+
+# 条件式の方を意識させたい場合には後置の if/unless を使わない方が分かりやすい
+Style/IfUnlessModifier:
+  Enabled: false
+
+# scope 等は複数行でも lambda ではなく ->{} で揃えた方が見た目が綺麗
+Style/Lambda:
+  Enabled: false
+
+# * 警告 120文字
+# * 禁止 160文字
+# のイメージ
 Metrics/LineLength:
-  Max: 130
+  Max: 160
+  Exclude:
+    - "db/migrate/*.rb"
+
+Metrics/BlockLength:
+  Max: 100
+  Exclude:
+    - "db/migrate/*.rb"
+
+# 20 行超えるのは migration ファイル以外滅多に無い
+Metrics/MethodLength:
+  Max: 20
+  Exclude:
+    - "db/migrate/*.rb"
+
+Style/BlockDelimiters:
+  AutoCorrect: false
+  Exclude:
+    - "spec/**/*"
+
+Naming/HeredocDelimiterNaming:
+  Enabled: false
