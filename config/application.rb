@@ -17,24 +17,14 @@ require "sprockets/railtie"
 # you've limited to :test, :development, or :production.
 Bundler.require(*Rails.groups)
 
-module Mdbootstrap
+module IdeaNote
   class Application < Rails::Application
-    # Initialize configuration defaults for originally generated Rails version.
+    # 以下を追加すれば日本語に
+    config.i18n.default_locale = :ja
+    # タイムゾーンも変更するなら，以下を追加
+    config.time_zone = 'Asia/Tokyo'
+
     config.load_defaults 5.2
-
-    # Settings in config/environments/* take precedence over those specified here.
-    # Application configuration can go into files in config/initializers
-    # -- all .rb files in that directory are automatically loaded after loading
-    # the framework and any gems in your application.config.generators do |g|
-    config.generators do |g|
-      g.javascripts false
-      g.helper false
-      g.test_framework false
-      g.coffee false
-    end
-
-
-    # Don't generate system test files.
     config.generators.system_tests = nil
   end
 end
