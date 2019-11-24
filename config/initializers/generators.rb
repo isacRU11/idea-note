@@ -4,4 +4,5 @@ Rails.application.config.generators do |g|
   g.template_engine :erb
   g.skip_routes true
   g.test_framework false
+  g.jbuilder false
 end
