@@ -1,0 +1,24 @@
+= form_with(model: idea, local: true) do |form|
+  - if idea.errors.any?
+    #error_explanation
+      h2
+        = pluralize(idea.errors.count, "error")
+        |  prohibited this idea from being saved:
+      ul
+        - idea.errors.full_messages.each do |message|
+          li
+            = message
+  .field
+    = form.label :subject
+    = form.text_field :subject
+  .field
+    = form.label :body
+    = form.text_field :body
+  .field.form-group.form-group-lg
+    = form.label :tag_list, class: "sr-only control-label"
+    = form.text_field :tag_list, value: @idea.tag_list.join(','), class: "form-control"
+  - tag_cloud(@tags, %w(css1 css2 css3 css4)) do |tag, css_class|
+    = check_box "taglist", tag.id
+    = tag.name
+  .actions
+    = form.submit

@@ -66,3 +66,5 @@ gem 'devise-i18n'
 
 gem 'acts-as-taggable-on', '~> 6.0'
 gem 'ransack'
+
+gem 'slim-rails'
