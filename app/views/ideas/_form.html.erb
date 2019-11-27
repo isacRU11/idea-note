@@ -26,6 +26,11 @@
   <%= form.text_field :tag_list, value: @idea.tag_list.join(','), class: "form-control" %>
 </div>
 
+<% tag_cloud(@tags, %w(css1 css2 css3 css4)) do |tag, css_class| %>
+
+<%= check_box "taglist", tag.id %><%= tag.name %>
+<% end %>
+
 <div class="actions">
   <%= form.submit %>
 </div>

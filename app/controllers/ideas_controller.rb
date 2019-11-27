@@ -4,7 +4,12 @@ class IdeasController < ApplicationController
   # GET /ideas
   # GET /ideas.json
   def index
-    @ideas = Idea.all
+    @search = Idea.ransack(params[:q])
+    if params[:q]
+      @ideas = @search.result(distinct: true)
+    else
+      @ideas = Idea.order(updated_at: :desc)
+    end
   end
 
   # GET /ideas/1
@@ -19,6 +24,8 @@ class IdeasController < ApplicationController
 
   # GET /ideas/1/edit
   def edit
+    @tags = Idea.tag_counts_on(:tags)
+
   end
 
   # POST /ideas
@@ -40,6 +47,10 @@ class IdeasController < ApplicationController
   # PATCH/PUT /ideas/1
   # PATCH/PUT /ideas/1.json
   def update
+    params[:taglist].each do | di1,di2 |
+      logger.debug('d1 :' + di1)
+      logger.debug('d2 :' + di2)
+    end
     respond_to do |format|
       if @idea.update(idea_params)
         format.html { redirect_to @idea, notice: 'Idea was successfully updated.' }
@@ -69,6 +80,6 @@ class IdeasController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def idea_params
-      params.require(:idea).permit(:user_id, :subject, :body, :is_delete, :tag_list)
+      params.require(:idea).permit(:user_id, :subject, :body, :tag_list)
     end
 end
