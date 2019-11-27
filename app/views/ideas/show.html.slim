@@ -1,0 +1,21 @@
+p#notice
+  = notice
+p
+  strong
+    | User:
+  = @idea.user_id
+p
+  strong
+    | Subject:
+  = @idea.subject
+p
+  strong
+    | Body:
+  = @idea.body
+p
+  - @idea.tag_list.each do |tag|
+    span.label.label-primary
+      = tag
+= link_to 'Edit', edit_idea_path(@idea)
+|  | 
+= link_to 'Back', ideas_path
