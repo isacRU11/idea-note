@@ -5,8 +5,15 @@ h1
 = search_form_for @search do |form|
   = form.label :name, "検索"
   = form.search_field :subject_or_body_matches
-  = form.submit "検索"
-  = link_to 'クリア', ideas_path
+  .form-group
+    - @tags.each do |t|
+      label for="idea_tag_list_#{t.id.to_s}"
+        = form.check_box :tags_id_in, { multiple: true, include_hidden: false }, t.id
+        span.checkbox =  t.name
+  .form-group
+    = form.submit "検索", class: "btn btn-lg btn-primary"
+    = link_to 'クリア', ideas_path
+
 table
   thead
     tr

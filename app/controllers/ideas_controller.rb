@@ -4,8 +4,9 @@ class IdeasController < ApplicationController
   # GET /ideas
   # GET /ideas.json
   def index
+    @tags = Idea.tag_counts_on(:tags)
     @search = Idea.ransack(params[:q])
-    if params[:q]
+    if params[:q].present?
       @ideas = @search.result(distinct: true)
     else
       @ideas = Idea.order(updated_at: :desc)
