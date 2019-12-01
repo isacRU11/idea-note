@@ -1,4 +1,4 @@
-class Idea < ApplicationRecord
-    acts_as_taggable
+class Idea < ActiveRecord::Base
+    acts_as_taggable_on :tags
     belongs_to :user
 end

@@ -13,12 +13,13 @@
     = form.text_field :subject
   .field
     = form.label :body
-    = form.text_field :body
-  .field.form-group.form-group-lg
-    = form.label :tag_list, class: "sr-only control-label"
-    = form.text_field :tag_list, value: @idea.tag_list.join(','), class: "form-control"
-  - tag_cloud(@tags, %w(css1 css2 css3 css4)) do |tag, css_class|
-    = check_box "taglist", tag.id
-    = tag.name
+    = form.text_area :body
+
+  ul.field.option_check
+    - @tags.each do |tag|
+      li
+        label for="idea_tag_list_#{tag.id.to_s}"
+          = form.check_box :tag_list, {multiple: true, checked: @idea.tag_list.include?(tag.name.to_s)}, tag.name.to_s, ''
+          span.checkbox =  tag.name
   .actions
     = form.submit
