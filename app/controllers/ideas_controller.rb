@@ -1,15 +1,13 @@
 class IdeasController < ApplicationController
   before_action :set_idea, only: [:show, :edit, :update, :destroy]
 
-  # GET /ideas
-  # GET /ideas.json
+  # アイディア一覧の表示
   def index
     @tags = Idea.tag_counts_on(:tags)
     @search = Idea.ransack(params[:q])
-    if params[:q].present?
-      @ideas = @search.result(distinct: true)
-    else
-      @ideas = Idea.order(updated_at: :desc)
+    @ideas = @search.result(distinct: true)
+    unless params[:q].blank?
+      render json: @ideas.select('subject').map { |e| e.subject }.to_json
     end
   end
 
